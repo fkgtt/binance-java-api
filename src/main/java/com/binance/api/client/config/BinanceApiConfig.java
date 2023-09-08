@@ -8,7 +8,7 @@ public class BinanceApiConfig {
 	/**
 	 * Base domain for URLs.
 	 */
-	private static String BASE_DOMAIN = "binance.us";
+	private static String BASE_DOMAIN = "binance.com";
 
     /**
      * Spot Test Network URL.
