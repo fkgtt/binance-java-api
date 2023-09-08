@@ -1,8 +1,5 @@
-package com.binance.api.examples;
+package com.binance.api.client;
 
-import com.binance.api.client.BinanceApiClientFactory;
-import com.binance.api.client.BinanceApiRestClient;
-import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.market.AggTrade;
 
 import java.util.HashMap;
@@ -21,8 +18,8 @@ public class AggTradesCacheExample {
   private Map<Long, AggTrade> aggTradesCache;
 
   public AggTradesCacheExample(String symbol) {
-    initializeAggTradesCache(symbol);
-    startAggTradesEventStreaming(symbol);
+//    initializeAggTradesCache(symbol);
+    startAggTradesEventStreaming1(symbol);
   }
 
   /**
@@ -65,6 +62,14 @@ public class AggTradesCacheExample {
       System.out.println(updateAggTrade);
     });
   }
+  private void startAggTradesEventStreaming1(String symbol) {
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    BinanceApiWebSocketClient client = factory.newWebSocketClient();
+
+    client.onAggTradeEvent(symbol.toLowerCase(), response -> {
+      System.out.println(response.getEventTime()+",price:"+response.getPrice());
+    });
+  }
 
   /**
    * @return an aggTrades cache, containing the aggregated trade id as the key,
@@ -75,6 +80,6 @@ public class AggTradesCacheExample {
   }
 
   public static void main(String[] args) {
-    new AggTradesCacheExample("ETHBTC");
+    new AggTradesCacheExample("BTCUSDT");
   }
 }
